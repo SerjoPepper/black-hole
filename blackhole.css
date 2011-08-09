@@ -18,4 +18,5 @@ body.serjo-blackhole {
 	-moz-animation-iteration-count: infinite;
 	-moz-animation-direction: alternate;
 	-moz-animation-timing-function: ease-in-out;
+	-moz-animation-play-state: running;
 }	

@@ -42,7 +42,7 @@ body.blackhole-animate {
 	-moz-border-radius: 50px;
 }
 
-.scary-blackhole:hover {
+.scary-blackhole.active-blackhole-position {
 	width: 20px;
 	height: 20px;
 	background: #000;

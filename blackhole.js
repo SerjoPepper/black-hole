@@ -11,8 +11,8 @@
 	addClass(body, c);
 	
 	body.appendChild(blackhole);
-	blackhole.removeClass('init-' + cName('position'));
-	blackhole.addClass('active-' + cName('position'));
+	removeClass(blackhole, 'init-' + cName('position'));
+	addClass(blackhole, 'active-' + cName('position'));
 	
 	function cName (className) {
 		return 'blackhole-' + className;

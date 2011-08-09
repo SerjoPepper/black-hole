@@ -1,4 +1,4 @@
-@keyframes resize {
+@keyframes tremor {
 	0% {
 		padding: 0;
 	}
@@ -12,10 +12,10 @@
 	}
 }
 	
-#box {
-	animation-name: resize;
-	animation-duration: 1s;
-	animation-iteration-count: 4;
-	animation-direction: alternate;
-	animation-timing-function: ease-in-out;
+body.serjo-blackhole {
+	-moz-animation-name: tremor;
+	-moz-animation-duration: 1s;
+	-moz-animation-iteration-count: infinite;
+	-moz-animation-direction: alternate;
+	-moz-animation-timing-function: ease-in-out;
 }	

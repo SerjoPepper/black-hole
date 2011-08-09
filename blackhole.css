@@ -39,10 +39,12 @@ body.blackhole-animate {
 	width: 100px;
 	height: 100px;
 	background: #600;
+	-moz-border-radius: 50px;
 }
 
 .scary-blackhole:hover {
 	width: 20px;
 	height: 20px;
 	background: #000;
+	-moz-border-radius: 10px;
 }

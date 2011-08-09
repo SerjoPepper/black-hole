@@ -32,7 +32,7 @@ body.blackhole-animate {
 	top: 0;
 	left: 0;
 	z-index: 9999;
-	-moz-transition: all 3s linear 3s;
+	-moz-transition: all 3s linear;
 }
 
 .scary-blackhole.init-blackhole-position {
@@ -41,7 +41,7 @@ body.blackhole-animate {
 	background: #600;
 }
 
-.scary-blackhole.active-blackhole-position {
+.scary-blackhole:hover {
 	width: 20px;
 	height: 20px;
 	background: #000;

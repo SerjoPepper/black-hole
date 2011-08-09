@@ -7,7 +7,7 @@
 		blackhole = document.createElement('div');
 		
 		
-	addClass(blackhole, 'scary-blackhole init-' + cName('position') + ' ' + c);
+	addClass(blackhole, c + ' scary-blackhole init-' + cName('position'));
 	addClass(body, c);
 	
 	body.appendChild(blackhole);

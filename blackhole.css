@@ -15,4 +15,6 @@ body.serjo-blackhole {
 	-moz-animation-iteration-count: infinite;
 	-moz-animation-direction: alternate;
 	-moz-animation-timing-function: ease-in-out;
+	-moz-transition: all 1s ease-in-out;
+	-moz-transform: translate(5px, 5px);
 }	

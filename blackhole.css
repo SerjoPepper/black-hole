@@ -15,6 +15,16 @@
 		-moz-transform: translate(0px, 0px);
 	}
 }
+
+@-moz-keyframes glow {
+	from {
+		-moz-box-shadow: 0px 0px 10px #0f0;
+	}
+	to {
+		-moz-box-shadow: 0px 0px 10px #00f;
+	}
+}
+
 .blackhole-animate {
 		-moz-transition: all 1s ease-in-out;
 	}
@@ -40,6 +50,8 @@ body.blackhole-animate {
 	height: 2px;
 	background: #fff;
 	-moz-border-radius: 1px;
+	-moz-transform: translate(-1px, -1px);
+	-moz-box-shadow: 0px 0px 1px #fff;
 }
 
 .scary-blackhole.active-blackhole-position {
@@ -47,5 +59,13 @@ body.blackhole-animate {
 	height: 100px;
 	background: #000;
 	-moz-border-radius: 50px;
-	-moz-transform: translate(50px, 50px);
+	-moz-transform: translate(-50px, -50px);
+	-moz-box-shadow: 0px 0px 10px #0f0;
+	
+	-moz-animation-name: glow;
+	-moz-animation-duration: 1s;
+	-moz-animation-iteration-count: infinite;
+	-moz-animation-direction: normal;
+	-moz-animation-timing-function: linear;
+	-moz-animation-play-state: running;
 }

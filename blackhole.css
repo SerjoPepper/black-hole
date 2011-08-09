@@ -1,20 +1,21 @@
 @keyframes tremor {
 	0% {
-		-moz-transform: translate(5px, 5px);
+		top: 5px;
+		left: 5px;
 	}
 	100% {
-		-moz-transform: translate(-5px, -5px);
+		top: -5px;
+		left: -5px;
 	}
 }
 .serjo-blackhole {
 		-moz-transition: all 1s ease-in-out 0s;
 	}
 body.serjo-blackhole {
+	position: relative;
 	-moz-animation-name: tremor;
 	-moz-animation-duration: 1s;
 	-moz-animation-iteration-count: infinite;
 	-moz-animation-direction: alternate;
 	-moz-animation-timing-function: ease-in-out;
-	-moz-transition: all 1s ease-in-out;
-	-moz-transform: translate(5px, 5px);
 }	

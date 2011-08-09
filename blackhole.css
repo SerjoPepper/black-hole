@@ -1,12 +1,18 @@
 @-moz-keyframes tremor {
-	from {
-		-moz-transform: translate(5px, 5px);
+	0% {
+		-moz-transform: translate(0px, 2px);
+	}
+	25% {
+		-moz-transform: translate(-2px, 0px);
 	}
 	50% {
-		-moz-transform: translate(0px, 0px);
+		-moz-transform: translate(0px, -2px);
 	}
-	to {
-		-moz-transform: translate(-5px, -5px);
+	75% {
+		-moz-transform: translate(2px, 0px);
+	}
+	100% {
+		-moz-transform: translate(0px, 0px);
 	}
 }
 .serjo-blackhole {

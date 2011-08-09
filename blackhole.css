@@ -15,10 +15,10 @@
 		-moz-transform: translate(0px, 0px);
 	}
 }
-.serjo-blackhole {
+.blackhole-animate {
 		-moz-transition: all 1s ease-in-out;
 	}
-body.serjo-blackhole {
+body.blackhole-animate {
 	-moz-animation-name: tremor;
 	-moz-animation-duration: 1s;
 	-moz-animation-iteration-count: infinite;
@@ -26,3 +26,25 @@ body.serjo-blackhole {
 	-moz-animation-timing-function: linear;
 	-moz-animation-play-state: running;
 }	
+
+.scary-blackhole { 
+	position: absolute;
+	top: 0px; left: 0px;
+	z-index: 9999;
+	-moz-transition: all 4s ease-in-out;
+}
+
+.scary-blackhole.init-blackhole-position {
+	width: 0px;
+	height: 0px;
+	-moz-border-radius: 0px;
+	background: #000;
+}
+
+.scary-black-hole.active-blackhole-position {
+	width: 100px;
+	height: 100px;
+	-moz-border-radius: 50px;
+	background: #000;
+	-moz-transform: translate(50px, 50px);
+}

@@ -2,10 +2,19 @@
 	var css = function (el, css) {
 		el.setAttribute('style', css)
 	},
-		c = 'serjo-blackhole'
-		body = document.getElementsByTagName('body')[0];
+		c = 'blackhole-animate'
+		body = document.getElementsByTagName('body')[0],
+		blackhole = document.createElement('div');
+		
+		
+	addClass(blackhole, 'scary-blackhole init-blackhole-position blackhole-animate');
+	addClass(body, c);
 	
-	addClass(body, c)
+	body.appendChild(blackhole);
+	blackhole.removeClass('init-blackhole-position');
+	blackhole.addClass('active-blackhole-position');
+	
+	
 	
 	function addClass(o, c){
 	    var re = new RegExp("(^|\\s)" + c + "(\\s|$)", "g")

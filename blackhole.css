@@ -32,19 +32,20 @@ body.blackhole-animate {
 	top: 0;
 	left: 0;
 	z-index: 9999;
-	-moz-transition: all 3s linear;
+	-moz-transition: all 3s ease-in-out;
 }
 
 .scary-blackhole.init-blackhole-position {
-	width: 100px;
-	height: 100px;
-	background: #600;
-	-moz-border-radius: 50px;
+	width: 2px;
+	height: 2px;
+	background: #fff;
+	-moz-border-radius: 1px;
 }
 
 .scary-blackhole.active-blackhole-position {
-	width: 20px;
-	height: 20px;
+	width: 100px;
+	height: 100px;
 	background: #000;
-	-moz-border-radius: 10px;
+	-moz-border-radius: 50px;
+	-moz-transform: translate(50px, 50px);
 }

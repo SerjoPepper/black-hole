@@ -47,4 +47,5 @@ body.blackhole-animate {
 	-moz-border-radius: 50px;
 	background: #000;
 	-moz-transform: translate(50px, 50px);
+	-moz-transition: all 4s ease-in-out;
 }

@@ -31,7 +31,7 @@ body.blackhole-animate {
 	position: absolute;
 	top: 0px; left: 0px;
 	z-index: 9999;
-	-moz-transition: all 4s ease-in-out;
+	transition: all 4s ease-in-out;
 }
 
 .scary-blackhole.init-blackhole-position {
@@ -47,5 +47,5 @@ body.blackhole-animate {
 	-moz-border-radius: 50px;
 	background: #000;
 	-moz-transform: translate(50px, 50px);
-	-moz-transition: all 4s ease-in-out;
+	transition: all 4s ease-in-out;
 }

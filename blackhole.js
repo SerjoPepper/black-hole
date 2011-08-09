@@ -2,7 +2,7 @@
 	var css = function (el, css) {
 		el.setAttribute('style', css)
 	},
-		c = 'blackhole-animate'
+		c = cName('animate')
 		body = document.getElementsByTagName('body')[0],
 		blackhole = document.createElement('div');
 		
@@ -11,6 +11,7 @@
 	addClass(body, c);
 	
 	body.appendChild(blackhole);
+	addClass(blackhole, 'active-' + cName('position'));
 	
 	function cName (className) {
 		return 'blackhole-' + className;

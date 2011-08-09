@@ -35,16 +35,15 @@ body.blackhole-animate {
 }
 
 .scary-blackhole.init-blackhole-position {
-	width: 20px;
-	height: 20px;
-	-moz-border-radius: 10px;
-	background: #000;
-}
-
-.scary-blackhole.init-blackhole-position:hover {
 	width: 100px;
 	height: 100px;
 	-moz-border-radius: 50px;
 	background: #000;
-	-moz-transform: translate(50px, 50px);
+}
+
+.scary-blackhole.active-blackhole-position {
+	width: 20px;
+	height: 20px;
+	-moz-border-radius: 10px;
+	background: #000;
 }

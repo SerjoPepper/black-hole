@@ -38,6 +38,7 @@ body.blackhole-animate {
 	height: 100px;
 	-moz-border-radius: 50px;
 	background: #000;
+	-moz-transition: all 3s linear 3s;
 }
 
 .scary-blackhole.active-blackhole-position {
@@ -45,4 +46,5 @@ body.blackhole-animate {
 	height: 20px;
 	-moz-border-radius: 10px;
 	background: #000;
+	-moz-transition: all 3s linear 3s;
 }

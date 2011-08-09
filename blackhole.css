@@ -6,7 +6,9 @@
 		-moz-transform: translate(-5px, -5px);
 	}
 }
-	
+.serjo-blackhole {
+		-moz-transition: all 1s ease-in-out 0s;
+	}
 body.serjo-blackhole {
 	-moz-animation-name: tremor;
 	-moz-animation-duration: 1s;

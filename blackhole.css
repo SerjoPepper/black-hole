@@ -18,7 +18,7 @@
 .blackhole-animate {
 		-moz-transition: all 1s ease-in-out;
 	}
-body.blackhole-animate {
+body.blackhole-aimate {
 	-moz-animation-name: tremor;
 	-moz-animation-duration: 1s;
 	-moz-animation-iteration-count: infinite;

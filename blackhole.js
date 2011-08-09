@@ -1,9 +1,9 @@
 (function () {
 	var css = function (el, css) {
-		el.setAttribute('style', el.getAttribute('style') + css)
+		el.setAttribute('style', css)
 	},
-		html = document.getElementsByTagName('html')[0];
-	css(html, {
+		body = document.getElementsByTagName('body')[0];
+	css(body, {
 		'-moz-transition: all 3s ease-in-out; -moz-transform: translate(0,50px); '
 	});
 })();

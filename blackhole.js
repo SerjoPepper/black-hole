@@ -25,7 +25,7 @@
 				el.style[k] = css[k];
 			}
 		}
-	},
+	}
 	
 	function cName (className) {
 		return 'blackhole-' + className;

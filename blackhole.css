@@ -35,6 +35,7 @@
 	-moz-animation-direction: alternate;
 	-moz-animation-timing-function: linear;
 	-moz-animation-play-state: running;
+	overflow-x: hidden;
 }	
 
 .blackhole-wrapper .scary-blackhole {

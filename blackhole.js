@@ -4,11 +4,12 @@
 		blackhole = document.createElement('div'),
 		transparentLayout = document.createElement('div'),
 		windowOffset = window.pageYOffset,
-		screenHeight = window.screen.height;
+		screenHeight = window.screen.availHeight || window.screen.height,
+		screenWidth = window.screen.availWidth || window.screen.width;
 		
 	css(blackhole, { 
-		left: (window.screen.availWidth || window.screen.width)/2 + 'px',
-		top: (windowOffset + screenHeight/2) + 'px'
+		left: (screenWidth)/2 + 'px',
+		top: (windowOffset + screenHeight/2) - 30 + 'px'
 		
 	});
 	addClass(document.documentElement, cName('wrapper'));

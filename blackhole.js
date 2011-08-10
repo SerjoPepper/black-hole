@@ -6,7 +6,11 @@
 		windowOffset = window.pageYOffset,
 		screenHeight = window.screen.height;
 		
-	css(blackhole, { left: window.screen.width/2 + 'px', top: (windowOffset + screenHeight/2) + 'px' });
+	css(blackhole, { 
+		left: (window.screen.availWidth || window.screen.width)/2 + 'px',
+		top: (windowOffset + screenHeight/2) + 'px'
+		
+	});
 	addClass(document.documentElement, cName('wrapper'));
 	addClass(transparentLayout, cName('transparent-layout'));
 	addClass(blackhole, 'init-' + cName('position') + ' ' + cName('circle'));

@@ -70,7 +70,7 @@
 	-moz-animation-play-state: running;
 }
 
-.blackhole-wrapper .transparent-layout {
+.blackhole-wrapper .blackhole-transparent-layout {
 	position: fixed;
 	left: 0;
 	top: 0;

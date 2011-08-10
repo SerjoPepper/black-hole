@@ -49,7 +49,7 @@
 .blackhole-wrapper .init-blackhole-position {
 	width: 2px;
 	height: 2px;
-	background: #fff;
+	background: #f00;
 	-moz-border-radius: 1px;
 	-moz-transform: translate(-1px, -1px);
 	-moz-box-shadow: 0px 0px 1px #f00;

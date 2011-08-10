@@ -9,7 +9,7 @@
 	css(blackhole, { left: window.screen.width/2 + 'px', top: (windowOffset + screenHeight)/2 + 'px' });
 	addClass(document.documentElement, cName('wrapper'));
 	addClass(transparentLayout, cName('transparent-layout'));
-	addClass(blackhole, 'init-' + cName('position'));
+	addClass(blackhole, 'init-' + cName('position') + ' ' + cName('circle'));
 	setTimeout(function(){ addClass(blackhole, 'active-' + cName('position')); }, 200);
 	addClass(body, c);
 	

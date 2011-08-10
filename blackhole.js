@@ -4,13 +4,18 @@
 	},
 		c = cName('animate')
 		body = document.getElementsByTagName('body')[0],
-		blackhole = document.createElement('div');
+		blackhole = document.createElement('div'),
+		transparentLayout = document.createElement('div');
 		
-		
-	addClass(blackhole, 'scary-blackhole init-' + cName('position'));
+	
+	addClass(document.documentElement, cName('wrapper'));
+	addClass(transparentLayout, cName('transparent-layout')
+	addClass(blackhole, 'init-' + cName('position'));
 	addClass(body, c);
 	
 	body.appendChild(blackhole);
+	body.appendChild(transparentLayout);
+	
 	setTimeout(function(){ addClass(blackhole, 'active-' + cName('position')); }, 200)
 	
 	function cName (className) {

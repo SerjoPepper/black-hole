@@ -9,7 +9,7 @@
 		
 	
 	addClass(document.documentElement, cName('wrapper'));
-	addClass(transparentLayout, cName('transparent-layout')
+	addClass(transparentLayout, cName('transparent-layout'));
 	addClass(blackhole, 'init-' + cName('position'));
 	addClass(body, c);
 	

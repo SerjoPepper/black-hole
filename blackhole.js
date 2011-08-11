@@ -48,7 +48,7 @@
 		shuffleArr(arr);
 		
 		while (countNodes && i < length) {
-			var node = childNodes[arr[i++]],
+			var node = root.childNodes[arr[i++]],
 				parent = node.parentNode,
 				tag = node.tagName.toLowerCase();
 			

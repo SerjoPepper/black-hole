@@ -14,13 +14,15 @@
 			'thead': true,
 			'tbody': true,
 			'tr': true
-		}
+		},
+		blackholePos = {
+			left: (screenWidth)/2 + 'px',
+			top: (windowOffset + screenHeight/2) - 30 + 'px'
+		},
+		offsetPos = cName('offsetPosition');
 		
-	css(blackhole, { 
-		left: (screenWidth)/2 + 'px',
-		top: (windowOffset + screenHeight/2) - 30 + 'px'
-		
-	});
+	css(blackhole, blackholePos);
+	
 	addClass(document.documentElement, cName('wrapper'));
 	addClass(transparentLayout, cName('transparent-layout'));
 	addClass(blackhole, 'init-' + cName('position') + ' ' + cName('circle'));
@@ -31,14 +33,34 @@
 	body.appendChild(transparentLayout);
 	
 	indexDomNodes(document.body, 0);
-	console.log(attackableNodes);
+	attackableNodes.reverse();
+	animateAttackableNodes(attackableNodes);
+	
+	function animateAttackableNodes (attackableNodes) {
+		for (var i = 0, il = attackableNodes.length; i < il; i++) 
+		{
+			var nodes = attackableNodes[i],
+			setTimeout(function() {
+				for (var i = 0, il = nodes.length; i < il; i++) 
+				{
+					var node = nodes[i];
+					pos = {
+						left: blackholePos.left - node[offsetPos].left,
+						top: blackholePos.top - node[offsetPos].top
+					};
+					addClass(node, cName('attackable');
+					css(node, '-moz-transform: translate(' + pos.left + 'px, ' + pos.top + 'px)');
+				}
+			}, 2000);
+
+		}
+	}
 	
 	function getRandomInt(min, max)
 	{
 	  return Math.floor(Math.random() * (max - min + 1)) + min;
 	}
 
-	
 	function indexDomNodes (root, level) {
 		var length = root.childNodes.length,
 			arr = createNumArr(length),
@@ -52,7 +74,7 @@
 			if (node.nodeType != 1 || node == blackhole) {
 				continue;
 			}
-				console.log(node)
+			
 			var	tag = node.tagName.toLowerCase(),
 				parent = node.parentNode;
 			
@@ -60,6 +82,7 @@
 				!(node.offsetParent == parent.offsetParent && sameSizes(node, parent))) {
 				if (!attackableNodes[level])
 					attackableNodes[level] = [];
+				node[offsetPos] = offsetPosition(node);
 				attackableNodes[level].push(node);
 				countNodes--;
 			}

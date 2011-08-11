@@ -79,3 +79,7 @@
 	height: 100%;
 	z-index: 9998;
 }
+
+.blackhole-wrapper .blackhole-attackable {
+	-moz-transition: all 2s ease-in-out;
+}

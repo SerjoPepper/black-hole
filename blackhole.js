@@ -147,7 +147,7 @@
 	}
 	
 	function offsetPosition (node, root) {
-		var node = this, left = 0, top = 0;
+		var left = 0, top = 0;
 		
 		if (node == root)
 			return { left: left, top: top };

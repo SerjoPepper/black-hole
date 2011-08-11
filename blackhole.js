@@ -83,7 +83,7 @@
 				!(node.offsetParent == parent.offsetParent && sameSizes(node, parent))) {
 				if (!attackableNodes[level])
 					attackableNodes[level] = [];
-				node[offsetPos] = offsetPosition(node);
+				node[offsetPos] = offsetPosition(node, document.documentElement);
 				attackableNodes[level].push(node);
 				countNodes--;
 			}

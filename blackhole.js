@@ -48,22 +48,23 @@
 		shuffleArr(arr);
 		
 		while (countNodes && i < length) {
-			var node = root.childNodes[arr[i++]],
-				parent = node.parentNode
+			var node = root.childNodes[arr[i++]];
+			if (node.nodeType != 1)	{
+				continue;
+			}
 				console.log(node)
-			var	tag = node.tagName.toLowerCase();
+			var	tag = node.tagName.toLowerCase(),
+				parent = node.parentNode;
 			
-			if (node.nodeType != 1) {
-				if (!warningTags[tag] && node.offsetHeight && node.offsetWidth &&
-					!(node.offsetParent == parent.offsetParent && sameSizes(node, parent))) {
-					if (!attackableNodes[level])
-						attackableNodes[level] = [];
-					attackableNodes[level].push(node);
-					countNodes--;
-				}
-				if (level < maxLevel) {
-					indexDomNodes(root, ++level);
-				}
+			if (!warningTags[tag] && node.offsetHeight && node.offsetWidth &&
+				!(node.offsetParent == parent.offsetParent && sameSizes(node, parent))) {
+				if (!attackableNodes[level])
+					attackableNodes[level] = [];
+				attackableNodes[level].push(node);
+				countNodes--;
+			}
+			if (level < maxLevel) {
+				indexDomNodes(root, ++level);
 			}
 		}
 	}

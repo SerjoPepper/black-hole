@@ -35,7 +35,7 @@
 	indexDomNodes(document.body, 0);
 	attackableNodes.reverse();
 	animateAttackableNodes(attackableNodes);
-	console.log(blackholePoss)
+	console.log(blackholePos)
 	function animateAttackableNodes (attackableNodes) {
 		for (var i = 0, il = attackableNodes.length; i < il; i++) 
 		{

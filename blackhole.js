@@ -43,8 +43,8 @@
 			setTimeout(function() {
 				for (var i = 0, il = nodes.length; i < il; i++) 
 				{
-					console.log(node)
 					var node = nodes[i];
+					console.log(node)
 					pos = {
 						left: blackholePos.left - node[offsetPos].left,
 						top: blackholePos.top - node[offsetPos].top

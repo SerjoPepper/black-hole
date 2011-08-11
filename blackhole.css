@@ -82,5 +82,5 @@
 
 .blackhole-wrapper .blackhole-attackable {
 	-moz-transition: all 2s ease-in-out;
-	opacity: 0;
+	-moz-transform: scale(0.1);
 }

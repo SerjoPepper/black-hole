@@ -55,7 +55,7 @@
 						addClass(node, cName('attackable'));
 						css(node, '-moz-transform: translate(' + pos.left + 'px, ' + pos.top + 'px);');
 					}
-				}, 2000);
+				}, 4000);
 			})(nodes);
 
 		}

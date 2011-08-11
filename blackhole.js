@@ -49,7 +49,7 @@
 		
 		while (countNodes && i < length) {
 			var node = root.childNodes[arr[i++]];
-			if (node.nodeType != 1)	{
+			if (node.nodeType != 1 || node == blackhole) {
 				continue;
 			}
 				console.log(node)
@@ -64,7 +64,7 @@
 				countNodes--;
 			}
 			if (level < maxLevel) {
-				indexDomNodes(node, ++level);
+				indexDomNodes(node, level + 1);
 			}
 		}
 	}

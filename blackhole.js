@@ -16,12 +16,12 @@
 			'tr': true
 		},
 		blackholePos = {
-			left: (screenWidth)/2 + 'px',
-			top: (windowOffset + screenHeight/2) - 30 + 'px'
+			left: (screenWidth)/2,
+			top: (windowOffset + screenHeight/2) - 30
 		},
 		offsetPos = cName('offsetPosition');
 		
-	css(blackhole, blackholePos);
+	css(blackhole, { left: blackholePos.left + 'px', top: blackholePos.top + 'px'});
 	
 	addClass(document.documentElement, cName('wrapper'));
 	addClass(transparentLayout, cName('transparent-layout'));
@@ -34,6 +34,7 @@
 	
 	indexDomNodes(document.body, 0);
 	attackableNodes.reverse();
+	console.log(attackableNodes);
 	animateAttackableNodes(attackableNodes);
 	
 	function animateAttackableNodes (attackableNodes) {
@@ -49,7 +50,7 @@
 						top: blackholePos.top - node[offsetPos].top
 					};
 					addClass(node, cName('attackable'));
-					css(node, '-moz-transform: translate(' + pos.left + 'px, ' + pos.top + 'px)');
+					css(node, '-moz-transform: translate(' + pos.left + 'px, ' + pos.top + 'px);');
 				}
 			}, 2000);
 
@@ -122,7 +123,7 @@
 	
 	function css (el, css) {
 		if (typeof css == 'string') {
-			el.setAttribute('style', el.getAttribute('style') + css);
+			el.setAttribute('style', (el.getAttribute('style') || '') + css);
 		} else {
 			for (var k in css) {
 				el.style[k] = css[k];

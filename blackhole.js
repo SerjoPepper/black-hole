@@ -42,7 +42,7 @@
 		{
 			var nodes = attackableNodes[i];
 			console.log(nodes)
-			function (nodes) {
+			(function (nodes) {
 				setTimeout(function() {
 					for (var j = 0, jl = nodes.length; j < jl; j++) 
 					{
@@ -56,7 +56,7 @@
 						css(node, '-moz-transform: translate(' + pos.left + 'px, ' + pos.top + 'px);');
 					}
 				}, 2000);
-			}(nodes)
+			})(nodes);
 
 		}
 	}

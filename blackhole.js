@@ -49,8 +49,9 @@
 		
 		while (countNodes && i < length) {
 			var node = root.childNodes[arr[i++]],
-				parent = node.parentNode,
-				tag = node.tagName.toLowerCase();
+				parent = node.parentNode
+				console.log(node)
+			var	tag = node.tagName.toLowerCase();
 			
 			if (node.nodeType != 1) {
 				if (!warningTags[tag] && node.offsetHeight && node.offsetWidth &&

@@ -41,9 +41,9 @@
 		{
 			var nodes = attackableNodes[i];
 			setTimeout(function() {
-				for (var i = 0, il = nodes.length; i < il; i++) 
+				for (var j = 0, jl = nodes.length; j < jl; j++) 
 				{
-					var node = nodes[i];
+					var node = nodes[j];
 					console.log(node)
 					pos = {
 						left: blackholePos.left - node[offsetPos].left,

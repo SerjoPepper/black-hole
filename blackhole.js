@@ -64,7 +64,7 @@
 				countNodes--;
 			}
 			if (level < maxLevel) {
-				indexDomNodes(root, ++level);
+				indexDomNodes(node, ++level);
 			}
 		}
 	}

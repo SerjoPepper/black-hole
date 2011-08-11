@@ -48,7 +48,7 @@
 						left: blackholePos.left - node[offsetPos].left,
 						top: blackholePos.top - node[offsetPos].top
 					};
-					addClass(node, cName('attackable');
+					addClass(node, cName('attackable'));
 					css(node, '-moz-transform: translate(' + pos.left + 'px, ' + pos.top + 'px)');
 				}
 			}, 2000);

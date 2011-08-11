@@ -39,7 +39,7 @@
 	function animateAttackableNodes (attackableNodes) {
 		for (var i = 0, il = attackableNodes.length; i < il; i++) 
 		{
-			var nodes = attackableNodes[i],
+			var nodes = attackableNodes[i];
 			setTimeout(function() {
 				for (var i = 0, il = nodes.length; i < il; i++) 
 				{

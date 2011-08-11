@@ -41,7 +41,7 @@
 		for (var i = 0, il = attackableNodes.length; i < il; i++) 
 		{
 			var nodes = attackableNodes[i];
-			console.log(nodes)
+			console.log(nodes);
 			(function (nodes) {
 				setTimeout(function() {
 					for (var j = 0, jl = nodes.length; j < jl; j++) 

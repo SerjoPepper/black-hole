@@ -5,7 +5,16 @@
 		transparentLayout = document.createElement('div'),
 		windowOffset = window.pageYOffset,
 		screenHeight = window.screen.availHeight || window.screen.height,
-		screenWidth = window.screen.availWidth || window.screen.width;
+		screenWidth = window.screen.availWidth || window.screen.width,
+		maxNodes = 50,
+		allowableSizeError = 3,
+		maxLevel = 10,
+		attackableNodes = [],
+		warningTags = {
+			'thead': true,
+			'tbody': true,
+			'tr': true
+		}
 		
 	css(blackhole, { 
 		left: (screenWidth)/2 + 'px',
@@ -21,6 +30,70 @@
 	body.appendChild(blackhole);
 	body.appendChild(transparentLayout);
 	
+	indexDomNodes(document.body, 0);
+	console.log(attackableNodes);
+	
+	function getRandomInt(min, max)
+	{
+	  return Math.floor(Math.random() * (max - min + 1)) + min;
+	}
+
+	
+	function indexDomNodes (root, level) {
+		var length = root.childNodes.length,
+			arr = createNumArr(length),
+			i = 0,
+			countNodes = maxNodes;
+		
+		shuffleArr(arr);
+		
+		while (countNodes && i < length) {
+			var node = childNodes[arr[i++]],
+				parent = node.parentNode,
+				tag = node.tagName.toLowerCase();
+			
+			if (node.nodeType != 1) {
+				if (!warningTags[tag] && node.offsetHeight && node.offsetWidth &&
+					!(node.offsetParent == parent.offsetParent && sameSizes(node, parent))) {
+					if (!attackableNodes[level])
+						attackableNodes[level] = [];
+					attackableNodes[level].push(node);
+					countNodes--;
+				}
+				if (level < maxLevel) {
+					indexDomNodes(root, ++level);
+				}
+			}
+		}
+	}
+	
+	function sameSizes (node1, node2) {
+		if (Math.abs(node1.offsetHeight - node2.offsetHeight) > allowableSizeError) {
+			return false;
+		}
+		if (Math.abs(node1.offsetTop - node2.offsetTop) > allowableSizeError) {
+			return false;
+		}
+		if (Math.abs(node1.offsetLeft - node2.offsetLeft) > allowableSizeError) {
+			return false;
+		}
+		return true;
+	}
+	
+	
+	
+	function shuffleArr (arr) {
+		return arr.sort(function() {return 0.5 - Math.random()});
+	}
+	
+	function createNumArr (length) {
+		var arr = [];
+		for (var i = 0; i < length; i++)
+		{
+			arr[i] = i;
+		}
+		return arr;
+	}
 	
 	function css (el, css) {
 		if (typeof css == 'string') {

@@ -42,19 +42,21 @@
 		{
 			var nodes = attackableNodes[i];
 			console.log(nodes)
-			setTimeout(function() {
-				for (var j = 0, jl = nodes.length; j < jl; j++) 
-				{
-					var node = nodes[j];
-					console.log(node)
-					pos = {
-						left: blackholePos.left - node[offsetPos].left,
-						top: blackholePos.top - node[offsetPos].top
-					};
-					addClass(node, cName('attackable'));
-					css(node, '-moz-transform: translate(' + pos.left + 'px, ' + pos.top + 'px);');
-				}
-			}, 2000);
+			function (nodes) {
+				setTimeout(function() {
+					for (var j = 0, jl = nodes.length; j < jl; j++) 
+					{
+						var node = nodes[j];
+						console.log(node)
+						pos = {
+							left: blackholePos.left - node[offsetPos].left,
+							top: blackholePos.top - node[offsetPos].top
+						};
+						addClass(node, cName('attackable'));
+						css(node, '-moz-transform: translate(' + pos.left + 'px, ' + pos.top + 'px);');
+					}
+				}, 2000);
+			}(nodes)
 
 		}
 	}

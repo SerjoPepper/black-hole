@@ -30,7 +30,8 @@
 			'rotateX', 'rotateY', 'rotateZ', 'skewX', 'skewY',
 			'skew', 'perspective'
 		];
-		
+	
+	alert(getTransformPropName());
 	css(blackhole, { left: blackholePos.left + 'px', top: blackholePos.top + 'px'});
 	
 	addClass(document.documentElement, 'wrapper');
@@ -240,5 +241,21 @@
 		}
 		
 		return { left: left, top: top };
+	}
+	
+	getTransformPropName () {
+		var el = document.createElement('div');
+		if (typeof el.style.MozTransform != 'undefined')
+			return 'MozTransform';
+		if (typeof el.style.OTransform != 'undefined')
+			return 'OTransform';
+		if (typeof el.style.ieTransform != 'undefined')
+			return 'ieTransform';
+		
+		el.style['-webkit-transform'] = 'scale(0)';
+		if (el.style.getPropertyValue('-webkit-transform'))
+			return '-webkit-transform';
+			
+		return null;	
 	}
 })();

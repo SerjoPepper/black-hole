@@ -72,16 +72,32 @@
     <pre>
 	<script type="text/javascript" charset="utf-8">
 		;(function(){
+			document.writeln('support transform: ' + (function () {
+				var el = document.createElement('div');
+				if (typeof el.style.MozTransform != 'undefined')
+					return 'MozTransform';
+				if (typeof el.style.OTransform != 'undefined')
+					return 'OTransform';
+				if (typeof el.style.ieTransform != 'undefined')
+					return 'ieTransform';
+				
+				el.style['-webkit-transform'] = 'scale(0)';
+				if (el.style.getPropertyValue('-webkit-transform'))
+					return '-webkit-transform';
+					
+				return null;	
+			})());
+			
 			var el = document.createElement('div');
 			document.body.appendChild(el);
 			for (var prop in el.style) {
 				document.writeln(prop + ' = ' + el.style[prop])
 			}
 			
-			el.style['WebkitTransform'] = 'scale(0,0)';
+			el.style['webkitTransform'] = 'scale(0,0)';
 			el.style['-webkit-transform'] = 'scale(0,0)';
 			document.writeln();
-			document.writeln(el.style.getPropertyValue('WebkitTransform'));
+			document.writeln(el.style.getPropertyValue('webkitTransform'));
 			document.writeln(el.style.getPropertyValue('-webkit-transform'));
 		})();
 	</script>  	

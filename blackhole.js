@@ -250,7 +250,7 @@
 		if (typeof el.style.OTransform != 'undefined')
 			return 'OTransform';
 		if (typeof el.style.ieTransform != 'undefined')
-			return 'ieTransform';
+			return 'msTransform';
 		
 		el.style['-webkit-transform'] = 'scale(0)';
 		if (el.style.getPropertyValue('-webkit-transform'))

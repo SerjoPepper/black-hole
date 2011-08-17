@@ -249,7 +249,7 @@
 			return 'MozTransform';
 		if (typeof el.style.OTransform != 'undefined')
 			return 'OTransform';
-		if (typeof el.style.ieTransform != 'undefined')
+		if (typeof el.style.msTransform != 'undefined')
 			return 'msTransform';
 		
 		el.style['-webkit-transform'] = 'scale(0)';

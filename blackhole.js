@@ -1,15 +1,19 @@
 (function () {
-	var c = cName('animate')
-		body = document.getElementsByTagName('body')[0],
+	var body = document.getElementsByTagName('body')[0],
 		blackhole = document.createElement('div'),
 		transparentLayout = document.createElement('div'),
 		windowOffset = window.pageYOffset,
 		screenHeight = window.screen.availHeight || window.screen.height,
 		screenWidth = window.screen.availWidth || window.screen.width,
-		maxNodes = 50,
+		maxNodesPerLevel = 50,
 		allowableSizeError = 3,
 		maxLevel = 10,
+		maxSize = {
+			width: 50,
+			height: 50
+		},
 		attackableNodes = [],
+		classPrefix = 'blackhole',
 		warningTags = {
 			'thead': true,
 			'tbody': true,
@@ -19,15 +23,21 @@
 			left: (screenWidth)/2,
 			top: (windowOffset + screenHeight/2) - 30
 		},
-		offsetPos = cName('offsetPosition');
+		offsetPos = cName('offsetPosition'),
+		transformFields = [
+			'matrix', 'matrix3d', 'translate3d', 'translateX',
+			'translateY', 'translateZ', 'scale', 'scale3d', 'scaleX', 'scaleY', 'scaleZ', 'rotate', 'rotate3d',
+			'rotateX', 'rotateY', 'rotateZ', 'skewX', 'skewY',
+			'skew', 'perspective'
+		];
 		
 	css(blackhole, { left: blackholePos.left + 'px', top: blackholePos.top + 'px'});
 	
-	addClass(document.documentElement, cName('wrapper'));
-	addClass(transparentLayout, cName('transparent-layout'));
-	addClass(blackhole, 'init-' + cName('position') + ' ' + cName('circle'));
-	setTimeout(function(){ addClass(blackhole, 'active-' + cName('position')); }, 200);
-	addClass(body, c);
+	addClass(document.documentElement, 'wrapper');
+	addClass(transparentLayout, 'transparent-layout');
+	addClass(blackhole, 'init-position', 'circle');
+	setTimeout(function(){ addClass(blackhole, 'active-position'); }, 200);
+	addClass(body, 'animate');
 	
 	body.appendChild(blackhole);
 	body.appendChild(transparentLayout);
@@ -35,6 +45,7 @@
 	indexDomNodes(document.body, 0);
 	attackableNodes.reverse();
 	animateAttackableNodes(attackableNodes);
+	
 	console.log(blackholePos)
 	
 	function animateAttackableNodes (attackableNodes) {
@@ -52,12 +63,60 @@
 							left: blackholePos.left - node[offsetPos].left,
 							top: blackholePos.top - node[offsetPos].top
 						};
-						addClass(node, cName('attackable'));
+						addClass(node, 'attackable');
 						css(node, '-moz-transform: translate(' + pos.left + 'px, ' + pos.top + 'px) scale(0.1);');
 					}
 				}, 2500 * i);
 			})(nodes);
-
+		}
+	}
+	
+	function CollapsingNode (node) {
+		this._node = node;
+	}
+	
+	CollapsingNode.prototype = {
+		parseTransform: function () {
+			this._transform;
+			
+		}
+	}
+	
+	function destroyNode (node) {
+		twirlToBlackholeCenter();
+	}
+	
+	function pulsate(node) {
+		addClass(node, 'pulsate-node');
+	}
+	
+	function flyToBlackhole (node) {
+		removeClass(node, 'pulsate-node');
+		addClass(node, 'rotate-node');
+		scaleNode(node);
+		moveToRadius(node);
+	}
+	
+	function twirlToBlackholeCenter (node) {
+		var transform = initTransform(node);
+	}
+	
+	function moveToRadius(node) {
+		
+	}
+	
+	function scaleNode (node) {
+		var width = node.offsetWidth,
+			height = node.offsetHeight;
+		
+		if (width > maxSize.width) {
+			var scaleX = width / maxSize.width;
+		}
+		if (height > maxSize.height) {
+			var scaleY = height / maxSize.height;
+		}
+		if (scaleX || scaleY) {
+			
 		}
 	}
 	
@@ -70,7 +129,7 @@
 		var length = root.childNodes.length,
 			arr = createNumArr(length),
 			i = 0,
-			countNodes = maxNodes;
+			countNodes = maxNodesPerLevel;
 		
 		shuffleArr(arr);
 		
@@ -110,8 +169,6 @@
 		return true;
 	}
 	
-	
-	
 	function shuffleArr (arr) {
 		return arr.sort(function() {return 0.5 - Math.random()});
 	}
@@ -136,18 +193,25 @@
 	}
 	
 	function cName (className) {
-		return 'blackhole-' + className;
+		return classPrefix + '-' +className;
 	}
 	
-	function addClass(o, c){
-	    var re = new RegExp("(^|\\s)" + c + "(\\s|$)", "g")
-	    if (re.test(o.className)) return
-	    o.className = (o.className + " " + c).replace(/\s+/g, " ").replace(/(^ | $)/g, "")
+	function addClass(o){
+	    for (var i = 1, il = arguments.length; i < il; i++) {
+	    	var c = cName(arguments[i]),
+	    		re = new RegExp("(^|\\s)" + c + "(\\s|$)", "g");
+	    	if (!re.test(o.className)) {
+	    		o.className = (o.className + " " + c).replace(/\s+/g, " ").replace(/(^ | $)/g, "");
+	    	}
+	    }
 	}
  
-	function removeClass(o, c){
-  		var re = new RegExp("(^|\\s)" + c + "(\\s|$)", "g")
-    	o.className = o.className.replace(re, "$1").replace(/\s+/g, " ").replace(/(^ | $)/g, "")
+	function removeClass(o){
+	    for (var i = 1, il = arguments.length; i < il; i++) {
+	    	var c = cName(arguments[i]),
+	    		re = new RegExp("(^|\\s)" + c + "(\\s|$)", "g");
+	    	o.className = o.className.replace(re, "$1").replace(/\s+/g, " ").replace(/(^ | $)/g, "");
+	    }		
 	}
 	
 	function offsetPosition (node, root) {

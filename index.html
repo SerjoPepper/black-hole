@@ -77,6 +77,10 @@
 			for (var prop in el.style) {
 				document.writeln(prop + ' = ' + el.style[prop])
 			}
+			
+			document.writeln();
+			document.writeln(el.style.getPropertyValue('WebkitTransform'));
+			document.writeln(el.style.getPropertyValue('-webkit-transform'));
 		})();
 	</script>  	
     </pre>

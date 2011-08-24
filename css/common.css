@@ -46,7 +46,7 @@
 	-moz-transition: all 3s ease-in-out;
 }
 
-.blackhole-wrapper .init-blackhole-position {
+.blackhole-wrapper .blackhole-init-position {
 	width: 2px;
 	height: 2px;
 	background: #f00;
@@ -55,14 +55,13 @@
 	-moz-box-shadow: 0px 0px 1px #f00;
 }
 
-.blackhole-wrapper .active-blackhole-position {
+.blackhole-wrapper .blackhole-active-position {
 	width: 200px;
 	height: 200px;
 	background: #000;
 	-moz-border-radius: 100px;
 	-moz-transform: translate(-100px, -100px);
 	-moz-box-shadow: 0px 0px 20px #0f0;
-	
 	-moz-animation-name: glow;
 	-moz-animation-duration: 1s;
 	-moz-animation-iteration-count: infinite;

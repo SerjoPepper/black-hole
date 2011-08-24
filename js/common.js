@@ -1,7 +1,13 @@
-(function () {
-	var body = document.getElementsByTagName('body')[0],
-		blackhole = document.createElement('div'),
-		transparentLayout = document.createElement('div'),
+window.onload = (function blackhole () {
+	
+	var transform = getSupportTransformName();
+	if (transform === null) {
+		return;
+	}
+	
+	window.BlackHoleProject = window.BlackHoleProject || {};
+	var BHP = window.BlackHoleProject,
+		body = document.getElementsByTagName('body')[0],
 		windowOffset = window.pageYOffset,
 		screenHeight = window.screen.availHeight || window.screen.height,
 		screenWidth = window.screen.availWidth || window.screen.width,
@@ -31,23 +37,27 @@
 			'skew', 'perspective'
 		];
 	
-	alert(getTransformPropName());
-	css(blackhole, { left: blackholePos.left + 'px', top: blackholePos.top + 'px'});
-	
-	addClass(document.documentElement, 'wrapper');
-	addClass(transparentLayout, 'transparent-layout');
-	addClass(blackhole, 'init-position', 'circle');
-	setTimeout(function(){ addClass(blackhole, 'active-position'); }, 200);
-	addClass(body, 'animate');
-	
-	body.appendChild(blackhole);
-	body.appendChild(transparentLayout);
-	
-	indexDomNodes(document.body, 0);
-	attackableNodes.reverse();
-	animateAttackableNodes(attackableNodes);
-	
-	console.log(blackholePos)
+	window.onload = BHP.bind = function () {
+		if (BHP.isActive) {
+			return;
+		}
+		BHP.isActive = true;
+		
+		var blackhole = document.createElement('div'),
+			transparentLayout = document.createElement('div');
+		
+		css(blackhole, { left: blackholePos.left + 'px', top: blackholePos.top + 'px'});
+		addClass(document.documentElement, 'wrapper');
+		addClass(transparentLayout, 'transparent-layout');
+		addClass(blackhole, 'init-position', 'circle');
+		setTimeout(function(){ addClass(blackhole, 'active-position'); }, 200);
+		addClass(body, 'animate');
+		body.appendChild(blackhole);
+		body.appendChild(transparentLayout);
+		indexDomNodes(document.body, 0);
+		attackableNodes.reverse();
+		animateAttackableNodes(attackableNodes);
+	};
 	
 	function animateAttackableNodes (attackableNodes) {
 		for (var i = 0, il = attackableNodes.length; i < il; i++) 
@@ -73,16 +83,14 @@
 	}
 	
 	function CollapsingNode (node) {
-		this._node = node;
+		this.node = node;
+		this.cssTransform = new CssTransform(node);
 	}
 	
 	CollapsingNode.prototype = {
-		parseTransform: function () {
-			this._transform;
-			
-		}
+		
 	}
-	
+
 	function destroyNode (node) {
 		twirlToBlackholeCenter();
 	}
@@ -243,7 +251,7 @@
 		return { left: left, top: top };
 	}
 	
-	getTransformPropName () {
+	function getSupportTransformName () {
 		var el = document.createElement('div');
 		if (typeof el.style.MozTransform != 'undefined')
 			return 'MozTransform';
@@ -258,4 +266,4 @@
 			
 		return null;	
 	}
-})();
+});

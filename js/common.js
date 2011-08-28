@@ -12,13 +12,14 @@ window.onload = (function blackhole () {
 		screenHeight = window.screen.availHeight || window.screen.height,
 		screenWidth = window.screen.availWidth || window.screen.width,
 		maxNodesPerLevel = 50,
-		allowableSizeError = 3,
+		allowableSizeFault = 3,
 		maxLevel = 10,
 		maxSize = {
 			width: 50,
 			height: 50
 		},
-		attackableNodes = [],
+		destroyingNodes = [], // двухмерный массив разрушаемых нод
+		revertingNodes = [], // одномерный массив восстонавливаемых нод
 		classPrefix = 'blackhole',
 		warningTags = {
 			'thead': true,
@@ -29,13 +30,27 @@ window.onload = (function blackhole () {
 			left: (screenWidth)/2,
 			top: (windowOffset + screenHeight/2) - 30
 		},
-		offsetPos = cName('offsetPosition'),
 		transformFields = [
 			'matrix', 'matrix3d', 'translate3d', 'translateX',
 			'translateY', 'translateZ', 'scale', 'scale3d', 'scaleX', 'scaleY', 'scaleZ', 'rotate', 'rotate3d',
 			'rotateX', 'rotateY', 'rotateZ', 'skewX', 'skewY',
 			'skew', 'perspective'
-		];
+		],
+		animationQueue = [],
+		touchPerLevel = 15, // максимальное количество подходов разрушений на уровень
+		delay = { // задержки
+			touch: 400
+		},
+		fps = 60,
+		n = {
+			rotate: fps/1000,
+			tangentTranslate: fps/3000,
+			twirlTranslate: fps/3000,
+			tangentScale: fps/3000,
+			twirlScale: fps/3000
+		},
+		endScale = 0.8, // уровень масштабирования на последней анимации
+		r = 300; // радиус облета черной дыры
 	
 	window.onload = BHP.bind = function () {
 		if (BHP.isActive) {
@@ -54,87 +69,78 @@ window.onload = (function blackhole () {
 		addClass(body, 'animate');
 		body.appendChild(blackhole);
 		body.appendChild(transparentLayout);
-		indexDomNodes(document.body, 0);
-		attackableNodes.reverse();
-		animateAttackableNodes(attackableNodes);
+		destroyingNodes = indexDomNodes(document.body, 0);
+		prepareDestroyingNodes(destroyingNodes);
+		animate();
 	};
 	
-	function animateAttackableNodes (attackableNodes) {
-		for (var i = 0, il = attackableNodes.length; i < il; i++) 
-		{
-			var nodes = attackableNodes[i];
-			console.log(nodes);
-			(function (nodes) {
-				setTimeout(function() {
-					for (var j = 0, jl = nodes.length; j < jl; j++) 
-					{
-						var node = nodes[j];
-						console.log(node)
-						pos = {
-							left: blackholePos.left - node[offsetPos].left,
-							top: blackholePos.top - node[offsetPos].top
-						};
-						addClass(node, 'attackable');
-						css(node, '-moz-transform: translate(' + pos.left + 'px, ' + pos.top + 'px) scale(0.1);');
+	/* Main functions */
+	
+	function prepareDestroyingNodes (destroyingNodes) {
+		var nodes = destroyingNodes.pop();
+		if (!nodes) {
+			return null;
+		}
+		
+		animationQueue = [];
+		
+		var l = nodes.length,
+			sinc = getSincArr(l, touchPerLevel);
+		
+		for (var j = 0, jl = sinc.length; j < jl; j++) {
+			for (var i = 0, il = sinc[i]; i < il; i++) {
+				var node = nodes.pop();
+				animationQueue.push(node);
+				node.activeThrough(delay * j);
+			}
+		}
+	}
+	
+	function getSincArr (elCount, limit) {
+		limit = elCount < limit ? elCount : limit;
+		var sinc = new Array(limit);
+		while (elCount > 0) {
+			for (var i = 0; i < limit; i++) {
+				if (elCount-- > 0) {
+					if (sinc[i]) {
+						sinc[i]++;
+					} else {
+						sinc[i] = 1
 					}
-				}, 2500 * i);
-			})(nodes);
+				} else {
+					break;
+				}
+			}
 		}
+		return sinc;
 	}
 	
-	function CollapsingNode (node) {
-		this.node = node;
-		this.cssTransform = new CssTransform(node);
-	}
-	
-	CollapsingNode.prototype = {
-		
-	}
-
-	function destroyNode (node) {
-		twirlToBlackholeCenter();
-	}
-	
-	function pulsate(node) {
-		addClass(node, 'pulsate-node');
-	}
-	
-	function flyToBlackhole (node) {
-		removeClass(node, 'pulsate-node');
-		addClass(node, 'rotate-node');
-		scaleNode(node);
-		moveToRadius(node);
-	}
-	
-	function twirlToBlackholeCenter (node) {
-		var transform = initTransform(node);
-	}
-	
-	function moveToRadius(node) {
-		
-	}
-	
-	function scaleNode (node) {
-		var width = node.offsetWidth,
-			height = node.offsetHeight;
-		
-		if (width > maxSize.width) {
-			var scaleX = width / maxSize.width;
+	function animate () {
+    	for (var i = 0, l = 0, il = animationQueue.length; i < il; i++) {
+    		var node = animationQueue[i];
+    		if (node) {
+    			if(node.isActive) {
+	    			var frame = node.nextFrame();
+	    			if (frame.end) {
+	    				node = animationQueue[i] = null;
+	    			}
+				}
+	    		if (node)
+	    			l++;
+    		}
+    	}
+    	if (l == 0) {
+    		if (prepareDestroyingNodes() !== null) {
+    			animate();
+    		} else {
+    			onAnimationEnd();
+    		}
+		} else {
+			animate();
 		}
-		if (height > maxSize.height) {
-			var scaleY = height / maxSize.height;
-		}
-		if (scaleX || scaleY) {
-			
-		}
-	}
+    }
 	
-	function getRandomInt(min, max)
-	{
-	  return Math.floor(Math.random() * (max - min + 1)) + min;
-	}
-
-	function indexDomNodes (root, level) {
+	function indexDomNodes (root, level, destroyingNodes) {
 		var length = root.childNodes.length,
 			arr = createNumArr(length),
 			i = 0,
@@ -151,28 +157,302 @@ window.onload = (function blackhole () {
 			var	tag = node.tagName.toLowerCase(),
 				parent = node.parentNode;
 			
-			if (!warningTags[tag] && node.offsetHeight && node.offsetWidth &&
+			if (!warningTags[tag] && /*node.offsetHeight && node.offsetWidth &&*/
 				!(node.offsetParent == parent.offsetParent && sameSizes(node, parent))) {
-				if (!attackableNodes[level])
-					attackableNodes[level] = [];
-				node[offsetPos] = offsetPosition(node, document.documentElement);
-				attackableNodes[level].push(node);
+				if (!destroyingNodes[level])
+					destroyingNodes[level] = [];
+				destroyingNodes[level].push(new DestroyingNode(node));
+				revertingNodes.push(new RevertingNode(node));
 				countNodes--;
 			}
 			if (level < maxLevel) {
-				indexDomNodes(node, level + 1);
+				destroyingNodes = indexDomNodes(node, level + 1, destroyingNodes);
 			}
+		}
+		return destroyingNodes;
+	}
+    
+	function onAnimationEnd () {
+		
+	}
+	
+    /* Classes */
+
+	// Класс для разрушения ноды
+	function DestroyingNode (node) {
+		addClass(node, 'destroying');
+		this.node = node;
+		this.offsetPos = offsetPosition(node, document.documentElement);
+		this.size = { width: node.offsetWidth, height: node.offsetHeight };
+		this.distance = {
+			left: blackholePos.left - this.offsetPos.left - this.size.width / 2,
+			top: blackholePos.top - this.offsetPos.top - this.size.height / 2			
+		};
+		this.isActive = false;
+		
+		var transform = this.parseTransform(),
+			endTangentScale = transform.scale,
+			endTwirlScale;
+		
+		if (maxSize.width > this.size.width || maxSize.height > this.size.height) {
+			var scale = (this.size.width > this.size.height) ?
+				maxSize.width / this.size.width : maxSize.height / this.size.height;
+			endTangentScale = [transform.scale[0] * scale, transform.scale[1] * scale];
+		}
+		
+		endTwirlScale = endTangentScale.map(function(a){ return a * endScale });
+		
+		this.transform = {
+			rotate: new RotateTransform(transform.rotate),
+			scale: new ScaleTransform(transform.scale, endTangentScale, endTwirlScale),
+			translate: new TranslateTransform(transform.translate, tangentVector, alpha)
+		};
+		// :)
+		eventManager.add(this.transform.translate.tangent, 'end', this.onTangentTranslateEnd, this);
+		eventManager.add(this.transform.translate.twirl, 'end', this.onTwirlTranslateEnd, this);		
+	}
+	
+	eventManager.add(obj, eventName, function () {});
+	
+	DestroyingNode.prototype = {
+		nextFrame: function () {
+			var scale = this.transform.scale,
+				rotate = this.transform.rotate,
+				translate = this.transform.translate;
+				
+			this.node.style[transform] = 
+				scale.nextFrame().toText() + ' ' + rotate.nextFrame().toText() + ' ' +translate.nextFrame().toText();
+		},
+		activeThrough: function (delay) {
+			var _this = this;
+			setTimeout(function () { _this.isActive = true; }, delay);
+		},
+		parseTransform: function () {
+			return {
+				scale: [1, 1],
+				rotate: 0,
+				translate: [0, 0]
+			};
+		},
+		onTangentTranslateEnd: function () {
+			this.transform.rotate.initTwirl();
+			this.transform.translate.initTwirl();
+			eventManager.remove(this.transform.translate.tangent);
+		},
+		onTwirlTranslateEnd: function () {
+			this.onEnd();
+			eventManager.remove(this.transform.translate.twirl);			
+		},
+		onEnd: function () {
+			this.end = true;
+			addClass(this.node, 'hidden');
+		},
+	}
+	
+	// Класс для восстановления ноды в исходное состояние
+	function RevertingNode (node) {
+		this.node = node;
+		this.className = node.className;
+		this.style = node.getAttribute('style');
+	}
+	
+	RevertingNode.prototype = {
+		revert: function () {
+			this.node.className = this.className;
+			this.node.setAttribute('style', this.style);
+		}
+	}
+
+    /* Transform classes */
+	
+	function RotateTransform (degrees) {
+		this.degrees = this.currentDegrees = degrees;
+		this.diffDegrees = 360;
+		this.n = 0;
+		this.diffN = n.rotate;
+	}
+	RotateTransform.prototype = {
+		toText: function () {
+			return 'rotate(' + this.currentDegrees + 'deg)';
+		},
+		nextFrame: function () {
+			this.currentDegrees = this.degrees + this.diffDegrees * this.nextN();
+			return this;
+		},
+		nextN: function () {
+			this.n += this.diffN;
+			if (this.n > 1)
+				this.n = 0;
+			return this.n;
+		},
+		endTransform: function () {
+			
+		}
+	}
+    
+	function ScaleTransform (scale, tangentEndScale, twirlEndScale) {
+		this.scale = scale;
+		this.currentTransform = new TangentScale(scale, tangentEndScale, n.tangentScale);
+		this.twirlEndScale = twirlEndScale;
+	}
+	ScaleTransform.prototype = {
+		toText: function () {
+			return 'scale(' + this.scale[0] + ',' + this.scale[1] + ')';
+		},
+		nextFrame: function (n) {
+			this.scale = this.currentTransform.nextFrame();
+			return this;
+		},
+		initTwirl: function () {
+			this.currentTransform = new TwirlScale(this.scale, this.twirlEndScale, n.twirlScale);
+		}
+	}
+	
+	function Scale (scale, endScale) {
+		this.scale = scale;
+		this.diffScale = this.getDiffScale(endScale);
+		this.n = 0;
+		this.diffN = diffN;
+	}
+	Scale.prototype = {
+		nextFrame: function () {
+			var n = this.nextN();
+			return [
+				this.scale[0] + this.diffScale[0] * n,
+				this.scale[1] + this.diffScale[1] * n
+			];
+		},
+		nextN: function () {
+			if (this.end) {
+				return;
+			}
+			this.n += this.diffN;
+			if (this.n > 1) {
+				this.n = 1;
+				this.onEnd();
+			}
+			return this.n
+		},
+		getDiffScale: function (endScale) {
+			var diffScale = [];
+			diffScale[0] = endScale[0] - this.scale[0];
+			diffScale[1] = endScale[1] - this.scale[1];
+			return diffScale;
+		},
+		onEnd: function() {
+			this.end = true;
+		}		
+	}
+	
+	function TranslateTransform (translate, tangentVector, alpha) {
+		this.translate = translate;
+		this.currentTransform = new TangentTranslate(translate, tangentVector);
+	}
+	TranslateTransform.prototype = {
+		nextFrame: function() {
+			this.translate = this.currentTransform.nextFrame();
+		},
+		toText: function() {
+			return 'translate(' + this.translate[0] + 'px,' + this.translate[1] + 'px)';
+		},
+		initTwirl: function () {
+			this.currentTransform = new TwirlTranslate(this.translate, alpha);
+		}
+	}
+	
+	function TangentTranslate (translate, vector) {
+		this.translate = translate;
+		this.n = 0;
+		this.diffN = n.tangentTranslate;
+		this.diffTranslate = vector;		
+	}
+	TangentTranslate.prototype = {
+		nextFrame: function () {
+			var n = this.nextN();
+			return [
+				this.translate[0] + this.diffTranslate[0] * n,
+				this.translate[1] + this.diffTranslate[1] * n
+			];
+		},
+		nextN: function () {
+			this.n += this.diffN;
+			if (this.n > 1) {
+				this.n = 1;
+				this.onEnd();
+			}
+			return this.n
+		}
+		endTransform: function() {
+			this.diffTranslate = [0, 0];
+			return this;
+		},
+		onEnd: function () {
+			this.end = true;
+			eventManager.fire(this, 'end');
+		}
+	}
+	
+	function TwirlTranslate (translate, alpha) {
+		this.translate = translate;
+		this.alpha = alpha;
+		this.r = r;
+		this.n = 0;
+		this.diffN = n.twirlTranslate;
+		this.diffAlpha = 360;
+		this.prevRV = [this.r * Math.sin(alpha), this.r * Math.cos(alpha)];
+	}
+	TwirlTranslate.prototype = {
+		nextFrame: function () {
+			var n = this.nextN(),
+				alpha = this.alpha + this.diffAlpha * n,
+				r = this.r - this.r * n,
+				rV = [r * Math.sin(alpha), r * Math.cos(alpha)],
+				translate = [
+					this.translate[0] - (rV[0] - prevRV[0]),
+					this.translate[1] + (rV[1] - prevRV[1])
+				],
+				prevRV = rV;
+			return translate;
+		},
+		nextN: function () {
+			this.n += this.diffN;
+			if (this.n > 1) {
+				this.n = 1;
+				this.onEnd();
+			}
+			return this.n
+		},
+		onEnd: function () {
+			this.end = true;
+			eventManager.fire(this, 'end');
+		}
+	}
+
+	/* Helpers */
+	
+	function scaleNode (node) {
+		var width = node.offsetWidth,
+			height = node.offsetHeight;
+		
+		if (width > maxSize.width) {
+			var scaleX = width / maxSize.width;
+		}
+		if (height > maxSize.height) {
+			var scaleY = height / maxSize.height;
+		}
+		if (scaleX || scaleY) {
+			
 		}
 	}
 	
 	function sameSizes (node1, node2) {
-		if (Math.abs(node1.offsetHeight - node2.offsetHeight) > allowableSizeError) {
+		if (Math.abs(node1.offsetHeight - node2.offsetHeight) > allowableSizeFault) {
 			return false;
 		}
-		if (Math.abs(node1.offsetTop - node2.offsetTop) > allowableSizeError) {
+		if (Math.abs(node1.offsetTop - node2.offsetTop) > allowableSizeFault) {
 			return false;
 		}
-		if (Math.abs(node1.offsetLeft - node2.offsetLeft) > allowableSizeError) {
+		if (Math.abs(node1.offsetLeft - node2.offsetLeft) > allowableSizeFault) {
 			return false;
 		}
 		return true;
@@ -266,4 +546,70 @@ window.onload = (function blackhole () {
 			
 		return null;	
 	}
+	
+	var requestAnimationFrame = (function(){
+      return  window.requestAnimationFrame       || 
+              window.webkitRequestAnimationFrame || 
+              window.mozRequestAnimationFrame    || 
+              window.oRequestAnimationFrame      || 
+              window.msRequestAnimationFrame     || 
+              function(/* function */ callback, /* DOMElement */ element){
+                window.setTimeout(callback, 1000 / fps);
+              };
+    })();
+    
+    function getRandomInt(min, max)
+	{
+	  return Math.floor(Math.random() * (max - min + 1)) + min;
+	}
+    
+	
+	var eventManager = {
+		events: {},
+		add: function (obj, eventName, callback, context) {
+			context = context || window;
+			var events = this.events;
+			events = events[obj] || (events[obj] = {});
+			events = events[eventName] || (events[eventName] = {});
+			events = events[callback] || (events[callback] = {});
+			events[context] = { callback: callback,	context: context };
+		},
+		remove: function (obj, eventName, callback, context) {
+			context = context || window;
+			var events = this.events;
+			if (!obj) {
+				this.events = null;
+				return;
+			};
+			if (!eventName) {
+				events[obj] = null;
+				return;
+			}
+			if (!callback) {
+				events[obj][eventName] = null;
+				return;
+			}
+			if (!context) {
+				events[obj][eventName][callback] = null;
+				return;
+			}
+			events[obj][eventName][callback][context] = null;
+		},
+		fire: function (obj, eventName) {
+			var events = this.events[obj];
+			if (!events) {
+				return;
+			}
+			events = events[eventName];
+			if (!events) {
+				return;
+			}
+			for (var callbacks in events)
+				for (var contexts in callbacks)
+					for (var event in contexts)
+						event.callback.call(event.context);
+		}
+	}
+
+	
 });

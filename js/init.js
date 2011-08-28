@@ -1,8 +1,6 @@
 //	load scripts
 (function () {
 	
-	loadTag('script', {	type: 'text/javascript', charset: 'utf-8', src: 'js/transform.js', id: 'blackhole-transform-js' });
-	loadTag('script', {	type: 'text/javascript', charset: 'utf-8', src: 'js/animate.js', id: 'blackhole-animate-js' });
 	loadTag('script', {	type: 'text/javascript', charset: 'utf-8', src: 'js/common.js', id: 'blackhole-common-js' });
 	loadTag('link', { rel: 'stylesheet', href: 'css/common.css',  id: 'blackhole-css' });
 	

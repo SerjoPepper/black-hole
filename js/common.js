@@ -45,7 +45,7 @@ window.initBlackHoleProject = function () {
             ];
         GLOBAL.touchPerLevel = 15, // максимальное количество подходов разрушений на уровень
         GLOBAL.delay = { // задержки
-                touch: 1000 // задержки между пусками
+                touch: 200 // задержки между пусками
             };
         GLOBAL.fps = 60;
         GLOBAL.n = { // частота анимации свойств

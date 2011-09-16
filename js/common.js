@@ -180,9 +180,16 @@ window.initBlackHoleProject = function () {
         if (eval(sinc.join('+')) != l)
             console.log(nodes, l)
             
+        var a = nodes.slice();
+        
+            
         for (var j = 0, jl = sinc.length; j < jl; j++) {
             for (var i = 0, il = sinc[i]; i < il; i++) {
                 var node = nodes.pop();
+                if (!nodes) {
+                    console.log(a)
+                    continue
+                }
                 animationQueue.push(node);
                 node.activeThrough(GLOBAL.delay.touch * (i + 1));
             }

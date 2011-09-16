@@ -1,4 +1,4 @@
-window.initBlackHole = function blackhole () {
+window.initBlackHoleProject = function () {
     
     window.BlackHoleProject = window.BlackHoleProject || {};
     var BHP = window.BlackHoleProject,
@@ -725,3 +725,8 @@ window.initBlackHole = function blackhole () {
     /*Start*/
     BHP.bind();
 };
+
+if (!window.holdBlackHoleProject) {
+    window.initBlackHoleProject();
+}
+

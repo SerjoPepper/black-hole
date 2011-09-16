@@ -4,11 +4,6 @@
 	loadTag('script', {	type: 'text/javascript', charset: 'utf-8', src: 'http://serjopepper.github.com/black-hole/js/common.js', id: 'blackhole-common-js' });
 	loadTag('link', { rel: 'stylesheet', href: 'http://serjopepper.github.com/black-hole/css/common.css',  id: 'blackhole-css' });
 	
-
-    
-    /*Start*/
-    window.onload = window.initBlackHole;
-	
 	function loadTag (tagName, attributes) {
 		if (document.getElementById(attributes.id)) {
 			return;

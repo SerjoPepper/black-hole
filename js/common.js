@@ -1,4 +1,4 @@
-window.onload = (function blackhole () {
+(function blackhole () {
     
     window.BlackHoleProject = window.BlackHoleProject || {};
     var BHP = window.BlackHoleProject;
@@ -725,4 +725,4 @@ window.onload = (function blackhole () {
     
     /*Start*/
     BHP.bind();
-});
+})();

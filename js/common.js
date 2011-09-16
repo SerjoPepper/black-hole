@@ -1,7 +1,7 @@
-(function blackhole () {
+window.initBlackHole = function blackhole () {
     
     window.BlackHoleProject = window.BlackHoleProject || {};
-    var BHP = window.BlackHoleProject;
+    var BHP = window.BlackHoleProject,
         // общие переменные для черной дыры :)
         GLOBAL = {};
         
@@ -26,8 +26,8 @@
                 width: 50,
                 height: 50
             };
-        GLOBAL.revertingNodes = [], // одномерный массив восстонавливаемых нод
-        GLOBAL.classPrefix = 'blackhole',
+        GLOBAL.revertingNodes = []; // одномерный массив восстонавливаемых нод
+        GLOBAL.classPrefix = 'blackhole';
         GLOBAL.warningTags = {
                 'thead': true,
                 'tbody': true,
@@ -722,7 +722,6 @@
       return Math.floor(Math.random() * (max - min + 1)) + min;
     }
     
-    
     /*Start*/
     BHP.bind();
-})();
+};

@@ -1,40 +1,40 @@
-@-moz-keyframes tremor {
+@-webkit-keyframes tremor {
 	0% {
-		-moz-transform: translate(0px, 3px);
+		-webkit-transform: translate(0px, 4px) rotate(0deg);
 	}
 	25% {
-		-moz-transform: translate(-3px, 0px);
+		-webkit-transform: translate(-4px, 0px)  rotate(-0.5deg);
 	}
 	50% {
-		-moz-transform: translate(0px, -3px);
+		-webkit-transform: translate(0px, -4px)  rotate(0deg);
 	}
 	75% {
-		-moz-transform: translate(3px, 0px);
+		-webkit-transform: translate(4px, 0px)  rotate(0.5deg);
 	}
 	100% {
-		-moz-transform: translate(0px, 0px);
+		-webkit-transform: translate(0px, 4px)  rotate(0deg);
 	}
 }
 
-@-moz-keyframes glow {
+@-webkit-keyframes glow {
 	from {
-		-moz-box-shadow: 0px 0px 20px #0f0;
+		-webkit-box-shadow: 0px 0px 20px #0f0;
 	}
 	to {
-		-moz-box-shadow: 0px 0px 25px #00f;
+		-webkit-box-shadow: 0px 0px 25px #00f;
 	}
 }
 
 .blackhole-wrapper .blackhole-animate {
-		-moz-transition: all 1s ease-in-out;
+		-webkit-transition: all 1s ease-in-out;
 	}
 .blackhole-wrapper body.blackhole-animate {
-	-moz-animation-name: tremor;
-	-moz-animation-duration: 1s;
-	-moz-animation-iteration-count: infinite;
-	-moz-animation-direction: alternate;
-	-moz-animation-timing-function: linear;
-	-moz-animation-play-state: running;
+	-webkit-animation-name: tremor;
+	-webkit-animation-duration: 1s;
+	-webkit-animation-iteration-count: infinite;
+	-webkit-animation-direction: alternate;
+	-webkit-animation-timing-function: linear;
+	-webkit-animation-play-state: running;
 	overflow-x: hidden;
 }	
 
@@ -43,31 +43,31 @@
 	top: 0;
 	left: 0;
 	z-index: 9999;
-	-moz-transition: all 3s ease-in-out;
+	-webkit-transition: all 3s ease-in-out;
 }
 
 .blackhole-wrapper .blackhole-init-position {
 	width: 2px;
 	height: 2px;
 	background: #f00;
-	-moz-border-radius: 1px;
-	-moz-transform: translate(-1px, -1px);
-	-moz-box-shadow: 0px 0px 1px #f00;
+	-webkit-border-radius: 1px;
+	-webkit-transform: translate(-1px, -1px);
+	-webkit-box-shadow: 0px 0px 1px #f00;
 }
 
 .blackhole-wrapper .blackhole-active-position {
 	width: 200px;
 	height: 200px;
 	background: #000;
-	-moz-border-radius: 100px;
-	-moz-transform: translate(-100px, -100px);
-	-moz-box-shadow: 0px 0px 20px #0f0;
-	-moz-animation-name: glow;
-	-moz-animation-duration: 1s;
-	-moz-animation-iteration-count: infinite;
-	-moz-animation-direction: normal;
-	-moz-animation-timing-function: linear;
-	-moz-animation-play-state: running;
+	-webkit-border-radius: 100px;
+	-webkit-transform: translate(-100px, -100px);
+	-webkit-box-shadow: 0px 0px 20px #0f0;
+	-webkit-animation-name: glow;
+	-webkit-animation-duration: 1s;
+	-webkit-animation-iteration-count: infinite;
+	-webkit-animation-direction: normal;
+	-webkit-animation-timing-function: linear;
+	-webkit-animation-play-state: running;
 }
 
 .blackhole-wrapper .blackhole-transparent-layout {
@@ -79,6 +79,13 @@
 	z-index: 9998;
 }
 
-.blackhole-wrapper .blackhole-attackable {
-	-moz-transition: all 2s ease-in-out;
+.blackhole-wrapper .blackhole-destroying {
+	opacity: 1;
 }
+
+.blackhole-wrapper .blackhole-destroying.blackhole-hidden {
+    opacity: 0;
+    -webkit-transition: all 1s ease-in-out;
+}
+
+

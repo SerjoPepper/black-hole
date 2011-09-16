@@ -4,8 +4,7 @@
   <meta charset='utf-8'>
 
   <title>SerjoPepper/black-hole @ GitHub</title>
-  <script type="text/javascript" charset="utf-8" src="blackhole.js"></script>
-  <link rel="stylesheet" href="blackhole.css" />
+
   <style type="text/css">
     body {
       margin-top: 1.0em;
@@ -29,6 +28,12 @@
     hr { border: 0; width: 80%; border-bottom: 1px solid #aaa}
     .footer { text-align:center; padding-top:30px; font-style: italic; }
   </style>
+  
+  <link rel="stylesheet" href="css/common.css" type="text/css" media="screen" title="no title" charset="utf-8">
+  
+  <script type="text/javascript" charset="utf-8" src="js/common.js">
+  	
+  </script>
 </head>
 
 <body>
@@ -38,7 +43,7 @@
 
     <div class="download">
       <a href="http://github.com/SerjoPepper/black-hole/zipball/master">
-        <img border="0" width="90" src="http://github.com/images/modules/download/zip.png"></a>
+        <img border="0" width="90" src="http://github.com/images/modules/download/zip.png" ololo="1"></a>
       <a href="http://github.com/SerjoPepper/black-hole/tarball/master">
         <img border="0" width="90" src="http://github.com/images/modules/download/tar.png"></a>
     </div>
@@ -54,6 +59,8 @@
 <p> (serjopepper@gmail.com)
 <br/>      </p>
 
+
+<a style="font-size: 30px" href="javascript:BlackHoleProject.bind();">DESTROY!!!</a>
     <h2>Download</h2>
     <p>
       You can download this project in either
@@ -69,7 +76,39 @@
       get the source code on GitHub : <a href="http://github.com/SerjoPepper/black-hole">SerjoPepper/black-hole</a>
     </div>
     
-    <pre><pre>
+    <pre>
+	<script type="text/javascript" charset="utf-8">
+		;(function(){
+			document.writeln('support transform: ' + (function () {
+				var el = document.createElement('div');
+				if (typeof el.style.MozTransform != 'undefined')
+					return 'MozTransform';
+				if (typeof el.style.OTransform != 'undefined')
+					return 'OTransform';
+				if (typeof el.style.msTransform != 'undefined')
+					return 'msTransform';
+				
+				el.style['-webkit-transform'] = 'scale(0)';
+				if (el.style.getPropertyValue('-webkit-transform'))
+					return '-webkit-transform';
+					
+				return null;	
+			})());
+			
+			var el = document.createElement('div');
+			document.body.appendChild(el);
+			for (var prop in el.style) {
+				document.writeln(prop + ' = ' + el.style[prop])
+			}
+			
+			el.style['webkitTransform'] = 'scale(0,0)';
+			el.style['-webkit-transform'] = 'scale(0,0)';
+			document.writeln();
+			document.writeln(el.style.getPropertyValue('webkitTransform'));
+			document.writeln(el.style.getPropertyValue('-webkit-transform'));
+		})();
+	</script>  	
+    </pre>
 
   </div>
 

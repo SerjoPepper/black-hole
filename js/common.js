@@ -186,8 +186,8 @@ window.initBlackHoleProject = function () {
         for (var j = 0, jl = sinc.length; j < jl; j++) {
             for (var i = 0, il = sinc[i]; i < il; i++) {
                 var node = nodes.pop();
-                if (!nodes) {
-                    console.log(a)
+                if (!node) {
+                    console.log(a, l, sinc)
                     continue
                 }
                 animationQueue.push(node);

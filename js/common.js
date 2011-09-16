@@ -146,7 +146,7 @@ window.onload = (function blackhole () {
                 }
             }
         };
-    window.onload = BHP.bind = function () {
+    BHP.bind = function () {
         if (BHP.isActive) {
             return;
         }
@@ -721,4 +721,8 @@ window.onload = (function blackhole () {
     function getRandomInt(min, max) {
       return Math.floor(Math.random() * (max - min + 1)) + min;
     }
+    
+    
+    /*Start*/
+    BHP.bind();
 });

@@ -173,11 +173,13 @@ window.initBlackHoleProject = function () {
             return null;
         }
         
-        var animationQueue = [];
+        var animationQueue = [],
+            l = nodes.length,
+            sinc = getSincArr(l); // делаем массив длин массивов, максимальная длина которого GLOBAL.touchPerLevel
         
-        var l = nodes.length,
-            sinc = getSincArr(l); // делаем массив массивов, максимальная длина которого GLOBAL.touchPerLevel
-        
+        if (eval(sinc.join('+')) != l)
+            console.log(nodes, l)
+            
         for (var j = 0, jl = sinc.length; j < jl; j++) {
             for (var i = 0, il = sinc[i]; i < il; i++) {
                 var node = nodes.pop();
@@ -243,8 +245,9 @@ window.initBlackHoleProject = function () {
             
             if (!GLOBAL.warningTags[tag] && node.offsetHeight && node.offsetWidth &&
                 !(node.offsetParent == parent.offsetParent && sameSizes(node, parent))) {
-                if (!destroyingNodes[level])
+                if (!destroyingNodes[level]) {
                     destroyingNodes[level] = [];
+                }
                 destroyingNodes[level].push(new DestroyingNode(node));
                 GLOBAL.revertingNodes.push(new RevertingNode(node));
                 countNodes--;

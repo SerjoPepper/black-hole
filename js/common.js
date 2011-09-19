@@ -45,7 +45,8 @@ window.initBlackHoleProject = function () {
             ];
         GLOBAL.touchPerLevel = 15, // максимальное количество подходов разрушений на уровень
         GLOBAL.delay = { // задержки
-                touch: 200 // задержки между пусками
+                touch: 500, // задержки между пусками
+                prepare: 1000 // задержка на подготовку
             };
         GLOBAL.fps = 60;
         GLOBAL.n = { // частота анимации свойств
@@ -162,7 +163,7 @@ window.initBlackHoleProject = function () {
         GLOBAL.body.appendChild(GLOBAL.nodes.transparentLayout);
         // массив нод типа [[div, div] [p,p,p,h1] [span,span,b,span]], начинаем разрушение с нижних нод
         var destroyingNodes = indexDomNodes(document.body, 0, []);
-        animate(destroyingNodes, []);
+        setTimeout(function () { animate(destroyingNodes, []) }, GLOBAL.delay.prepare);
     };
     
     /* Main functions */
@@ -176,10 +177,10 @@ window.initBlackHoleProject = function () {
         var animationQueue = [],
             l = nodes.length,
             sinc = getSincArr(l); // делаем массив длин массивов, максимальная длина которого GLOBAL.touchPerLevel
-        
+        /*
         if (eval(sinc.join('+')) != l)
             console.log(nodes, l)
-            
+        */  
         var a = nodes.slice();
         
             
@@ -187,11 +188,11 @@ window.initBlackHoleProject = function () {
             for (var i = 0, il = sinc[i]; i < il; i++) {
                 var node = nodes.pop();
                 if (!node) {
-                    console.log(a, l, sinc)
+                    console.log('no have prepared node', a, l, sinc)
                     continue
                 }
                 animationQueue.push(node);
-                node.activeThrough(GLOBAL.delay.touch * (i + 1));
+                node.activeThrough(GLOBAL.delay.touch * (j + 1));
             }
         }
         
@@ -221,6 +222,7 @@ window.initBlackHoleProject = function () {
         if (l == 0) {
             // записываем в animationQueue список нод, которые будем анимировать
             animationQueue = prepareDestroyingNodes(destroyingNodes);
+            console.log('prepare destroying nodes', animationQueue)
             if (animationQueue !== null) {
                 // анимируем следующий уровень
                 requestAnimationFrame(f);
@@ -287,6 +289,7 @@ window.initBlackHoleProject = function () {
     
     function onAnimationEnd () {
         BHP.isActive = false;
+        console.log('END DESTROYING')
     }
     
     /* Classes */
@@ -407,7 +410,7 @@ window.initBlackHoleProject = function () {
     }
 
     /* Transform classes */
-    
+      
     function RotateTransform (degrees) {
         this.degrees = this.currentDegrees = degrees;
         this.diffDegrees = 360;
@@ -424,8 +427,8 @@ window.initBlackHoleProject = function () {
         },
         nextN: function () {
             this.n += this.diffN;
-            if (this.n > 1 && this.n < 1)
-                this.n = 0;
+            //if (this.n > 1 || this.n < -1)
+            //    this.n = 0;
             return this.n;
         },
         endTransform: function () {

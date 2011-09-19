@@ -18,10 +18,10 @@
 
 @-webkit-keyframes glow {
 	from {
-		-webkit-box-shadow: 0px 0px 20px #0f0;
+		-webkit-box-shadow: 0px 0px 40px #0f0;
 	}
 	to {
-		-webkit-box-shadow: 0px 0px 25px #00f;
+		-webkit-box-shadow: 0px 0px 50px #00f;
 	}
 }
 
@@ -35,7 +35,8 @@
 	-webkit-animation-direction: alternate;
 	-webkit-animation-timing-function: linear;
 	-webkit-animation-play-state: running;
-	overflow-x: hidden;
+	overflow-x: hidden !important;
+	overflow-y: scroll !important;
 }	
 
 .blackhole-wrapper .blackhole-circle {
@@ -44,23 +45,23 @@
 	left: 0;
 	z-index: 9999;
 	-webkit-transition: all 3s ease-in-out;
+	background: url('img/zoomin.gif') no-repeat center;
+	opacity: 0.75;
 }
 
 .blackhole-wrapper .blackhole-init-position {
 	width: 2px;
 	height: 2px;
-	background: #f00;
 	-webkit-border-radius: 1px;
 	-webkit-transform: translate(-1px, -1px);
 	-webkit-box-shadow: 0px 0px 1px #f00;
 }
 
 .blackhole-wrapper .blackhole-active-position {
-	width: 200px;
-	height: 200px;
-	background: #000;
-	-webkit-border-radius: 100px;
-	-webkit-transform: translate(-100px, -100px);
+	width: 50px;
+	height: 50px;
+	-webkit-border-radius: 50px;
+	-webkit-transform: translate(-25px, -50px);
 	-webkit-box-shadow: 0px 0px 20px #0f0;
 	-webkit-animation-name: glow;
 	-webkit-animation-duration: 1s;

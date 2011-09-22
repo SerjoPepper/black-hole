@@ -1,18 +1,18 @@
 @-webkit-keyframes tremor {
 	0% {
-		-webkit-transform: translate(0px, 4px);
+		-webkit-transform: translate3d(0px, 4px, 0px);
 	}
 	25% {
-		-webkit-transform: translate(-4px, 0px);
+		-webkit-transform: translate3d(-4px, 0px, 0px);
 	}
 	50% {
-		-webkit-transform: translate(0px, -4px);
+		-webkit-transform: translate3d(0px, -4px, 0px);
 	}
 	75% {
-		-webkit-transform: translate(4px, 0px);
+		-webkit-transform: translate3d(4px, 0px, 0px);
 	}
 	100% {
-		-webkit-transform: translate(0px, 4px);
+		-webkit-transform: translate3d(0px, 4px, 0px);
 	}
 }
 
@@ -48,6 +48,7 @@
 	-webkit-animation-play-state: running;
 	overflow-x: hidden !important;
 	overflow-y: scroll !important;
+	-webkit-transform: translate3d(0px, 0px, 0px);
 }	
 
 .blackhole-wrapper .blackhole-circle {
